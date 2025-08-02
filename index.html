@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Nạp Kim Cương Free Fire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: black;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    /* Sao bắn */
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .stars::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2000px;
+      height: 2000px;
+      background: radial-gradient(white, rgba(255,255,255,0) 70%);
+      transform: translateX(-50%);
+      animation: starfield 40s linear infinite;
+      opacity: 0.2;
+    }
+
+    @keyframes starfield {
+      0% { transform: translateX(-50%) translateY(-1000px) scale(1); }
+      100% { transform: translateX(-50%) translateY(1000px) scale(1.5); }
+    }
+
+    .container {
+      background: rgba(30, 30, 60, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffcc;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 25px;
+      background: #404060;
+      color: #fff;
+    }
+
+    .package-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .package {
+      background-color: #3e3e5a;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+      border: 2px solid transparent;
+    }
+
+    .package:hover {
+      background-color: #57577a;
+    }
+
+    .selected {
+      border-color: #00ffcc;
+      background-color: #444466;
+    }
+
+    .package small {
+      display: block;
+      margin-top: 5px;
+      color: #bbb;
+    }
+
+    .btn-nap {
+      margin-top: 30px;
+      width: 100%;
+      padding: 15px;
+      background-color: #00cc99;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-nap:hover {
+      background-color: #00b386;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.4s;
+      z-index: 1000;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .popup-box {
+      background: #2f2f4f;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      color: #fff;
+      max-width: 400px;
+      box-shadow: 0 0 20px #000;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .popup-box h3 {
+      color: #00ffcc;
+      margin-bottom: 15px;
+    }
+
+    .popup-box p {
+      margin-bottom: 20px;
+    }
+
+    .popup-box button {
+      background-color: #ff5e5e;
+      color: #fff;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .blur {
+      filter: blur(6px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stars"></div>
+
+  <div class="container" id="mainContent">
+    <h2>Nạp Kim Cương Free Fire</h2>
+    <input type="text" placeholder="Nhập ID người chơi" id="playerId">
+
+    <div class="package-container" id="packageContainer">
+      <div class="package">51 Kim Cương<br><small>Gói 10x</small></div>
+      <div class="package">113 Kim Cương<br><small>Gói 20x</small></div>
+      <div class="package">283 Kim Cương<br><small>Gói 50x</small></div>
+      <div class="package">568 Kim Cương<br><small>Gói 100x</small></div>
+      <div class="package">1132 Kim Cương<br><small>Gói 150x</small></div>
+      <div class="package">2830 Kim Cương<br><small>Gói 200x</small></div>
+      <div class="package">5750 Kim Cương<br><small>Gói 300x</small></div>
+      <div class="package">11500 Kim Cương<br><small>Gói 500x</small></div>
+    </div>
+
+    <button class="btn-nap" onclick="showPopup()">💎 Xử lý đơn hàng</button>
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup-overlay">
+    <div class="popup-box">
+      <h3>🎉 Đơn hàng đang xử lý!</h3>
+      <p>Yêu cầu nạp kim cương của bạn đã được ghi nhận. Thời gian xử lý: 5 - 30 phút.</p>
+      <button onclick="closePopup()">Đóng</button>
+    </div>
+  </div>
+
+  <script>
+    const packages = document.querySelectorAll(".package");
+
+    packages.forEach(pkg => {
+      pkg.addEventListener("click", () => {
+        packages.forEach(p => p.classList.remove("selected"));
+        pkg.classList.add("selected");
+      });
+    });
+
+    function showPopup() {
+      const selected = document.querySelector(".package.selected");
+      if (!selected) {
+        alert("Vui lòng chọn một gói kim cương trước khi nạp.");
+        return;
+      }
+      document.getElementById("mainContent").classList.add("blur");
+      document.getElementById("popup").classList.add("show");
+    }
+
+    function closePopup() {
+      document.getElementById("mainContent").classList.remove("blur");
+      document.getElementById("popup").classList.remove("show");
+    }
+  </script>
+
+</body>
+</html>
